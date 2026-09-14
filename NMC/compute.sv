@@ -10,7 +10,7 @@ module compute (
     output logic [7 : 0] RES
 );
 
-reg signed [8 : 0] partial_RES;
+reg [8 : 0] partial_RES;
 assign RES = partial_RES[8 : 1];
 
 always_ff @(posedge clk) begin
