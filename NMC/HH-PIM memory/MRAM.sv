@@ -5,6 +5,8 @@ module MRAM (
     input logic read_en,
     input logic [4 : 0] addr,
     input logic [7 : 0] data_in_MRAM,
+    output logic data_written,
+    output logic data_ready,
     output logic [7 : 0] data_out_MRAM
 );
 
@@ -23,6 +25,8 @@ always_ff @(posedge clk) begin
         for (integer i = 0; i < 32; i++) begin
             MRAM_MEMORY[i] <= 8'b0;
         end
+        data_ready <= 1'b0;
+        data_written <= 1'b0;
         data_out_MRAM <= 8'b0;
         read_counter <= 2'b0;
         write_counter <= 4'b0; 
@@ -32,8 +36,10 @@ always_ff @(posedge clk) begin
             if (write_counter == write_delay) begin
                 MRAM_MEMORY[addr] <= data_in_MRAM;
                 write_counter <= 4'b0;
+                data_written <= 1'b1;
             end
             else begin
+                data_written <= 1'b0;
                 write_counter <= write_counter + 1;
             end
         end
@@ -41,9 +47,11 @@ always_ff @(posedge clk) begin
             if (read_counter == read_delay) begin
                 data_out_MRAM <= MRAM_MEMORY[addr];
                 read_counter <= 2'b0;
+                data_ready <= 1'b1;
             end
             else begin
                 read_counter <= read_counter + 1;
+                data_ready <= 1'b0;
             end
         end
     end
