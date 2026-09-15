@@ -42,6 +42,10 @@ always_ff @(posedge clk) begin
                 data_written <= 1'b0;
                 write_counter <= write_counter + 1;
             end
+            //at least 1 cycle is required for write and read_en to go back to 0
+            if (data_written) begin
+                write_counter <= 4'b0;
+            end
         end
         else if (read_en) begin
             if (read_counter == read_delay) begin
@@ -52,6 +56,9 @@ always_ff @(posedge clk) begin
             else begin
                 read_counter <= read_counter + 1;
                 data_ready <= 1'b0;
+            end
+            if (data_ready) begin
+                read_counter <= 2'b0;
             end
         end
     end
