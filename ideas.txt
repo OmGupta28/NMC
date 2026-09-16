@@ -1,0 +1,10 @@
+So I can make a hybrid between Maxwell and HH-PIM
+I will have to design a minimal ISA which supports MOV 
+betwwen SRAM and MRAM
+I will also have to figure out the address spaces and how the
+banks and cores can scale
+I can define WARPS (like how warps are independent of each other) and these warps can be
+executed on whichever cores the programmer wants (something like cuda but cuda allows a programmer
+managed scratch pad so not the same but you get my idea)
+For now, it'll only support MAC or I can add other general purpose ops if I want it wont take much time
+Ill ask claude whether warps which only execute MACs are worth it or not tomorrow 
