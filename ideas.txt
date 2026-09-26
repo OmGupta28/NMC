@@ -8,3 +8,7 @@ executed on whichever cores the programmer wants (something like cuda but cuda a
 managed scratch pad so not the same but you get my idea)
 For now, it'll only support MAC or I can add other general purpose ops if I want it wont take much time
 Ill ask claude whether warps which only execute MACs are worth it or not tomorrow 
+
+okay so i think i can commit to this for now
+so i can have multiple CFLs and i will have to broadcast operands from the MRAM
+i can hide the read latency of the MRAM by having sequential SRAM accesses for IMOs to give to my parallel CFLs

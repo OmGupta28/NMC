@@ -22,7 +22,7 @@ always_ff @(posedge clk) begin
     end
     else if (operate) begin
         if (sign) begin
-            partial_RES <= (partial_RES >>> 1) + (IMO ^ 9'hFFF) + 1;
+               partial_RES <= (partial_RES >>> 1) + (IMO ^ 9'hFFF) + 1; 
         end
         else if(BO == 1) begin
             partial_RES <= (partial_RES >>> 1) + IMO;
