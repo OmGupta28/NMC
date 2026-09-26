@@ -12,18 +12,18 @@ module Accumulator(
     input logic [7 : 0] IMO,
     input logic [4 : 0] BO,
     input logic new_MAC,
-    output logic operate,
-    output logic sign,
     output logic [31 : 0] MAC_0,
     output logic [31 : 0] MAC_1,
     output logic [31 : 0] MAC_2,
-    output logic BO_Split,
     output logic done
 );
 
 logic [7 : 0] RES_0;
 logic [7 : 0] RES_1;
 logic [7 : 0] RES_2;
+logic operate;
+logic sign;
+logic BO_Split;
 
 typedef enum logic [2 : 0] {
     IDLE    = 3'b000,

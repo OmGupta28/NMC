@@ -6,12 +6,9 @@ module tb_Accumulator;
      logic [7 : 0] IMO;
      logic [4 : 0] BO;
      logic new_MAC;
-     logic operate;
-     logic sign;
      logic [31 : 0] MAC_0;
      logic [31 : 0] MAC_1;
      logic [31 : 0] MAC_2;
-     logic BO_Split;
      logic done;
 
     Accumulator accu_dut (.*); 
