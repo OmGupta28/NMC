@@ -12,9 +12,9 @@ module SRAM (
     always_ff @(posedge clk) begin
         if (reset) begin
             for (integer i = 0; i < 32; i++) begin
-                SRAM_MEMORY[i] <= 8'b0;
+                SRAM_MEMORY[i] <= i + 1;
             end
-            data_out_SRAM <= 8'b0;
+            data_out_SRAM <= SRAM_MEMORY[0];
         end 
         else begin
             if (write_en) begin

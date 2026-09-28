@@ -8,15 +8,16 @@
 module Accumulator(
     input logic clk,
     input logic reset,
-    input logic new_IMO,
     input logic [7 : 0] IMO,
     input logic [4 : 0] BO,
     input logic new_MAC,
     output logic [31 : 0] MAC_0,
     output logic [31 : 0] MAC_1,
     output logic [31 : 0] MAC_2,
-    output logic done
+    output logic done,
+    output logic ready
 );
+
 
 logic [7 : 0] RES_0;
 logic [7 : 0] RES_1;
@@ -24,6 +25,7 @@ logic [7 : 0] RES_2;
 logic operate;
 logic sign;
 logic BO_Split;
+logic new_IMO;
 
 typedef enum logic [2 : 0] {
     IDLE    = 3'b000,
@@ -35,6 +37,8 @@ reg[3 : 0] BO_counter; //to track the BO bits
 reg[1 : 0] IMO_COLLECT_COUNTER;
 reg[7 : 0] IMO_Collector [0 : 2]; //3 IMOs
 state_t state_curr;
+
+assign ready = (state_curr == IDLE && IMO_COLLECT_COUNTER < 2'b11);
 
 always_ff @(posedge clk) begin
     if (reset) begin
@@ -51,12 +55,14 @@ always_ff @(posedge clk) begin
             IMO_Collector[i] <= 8'b0; 
         end
         done <= 1'b0;
+        new_IMO <= 1'b0;
     end
     else begin
         case (state_curr)
             IDLE: begin
                 done <= 1'b0;
-                if (new_IMO) begin
+                new_IMO <= 1'b1;
+                // if (new_IMO) begin
                     if (new_MAC) begin
                         MAC_0 <= 32'b0;
                         MAC_1 <= 32'b0;
@@ -66,13 +72,14 @@ always_ff @(posedge clk) begin
                         state_curr <= SPLIT;
                         operate <= 1'b1;
                         IMO_COLLECT_COUNTER <= 2'b00;
+                        new_IMO <= 1'b0;
                     end
                     else begin
                         BO_counter <= 0;
                         IMO_Collector[IMO_COLLECT_COUNTER] <= IMO;
                         IMO_COLLECT_COUNTER <= IMO_COLLECT_COUNTER + 1;
                     end
-                end
+                // end
             end
             SPLIT: begin
                 if (BO_counter >= 5) begin

@@ -13,7 +13,7 @@ okay so i think i can commit to this for now
 so i can have multiple CFLs and i will have to broadcast operands from the MRAM
 i can hide the read latency of the MRAM by having sequential SRAM accesses for IMOs to give to my parallel CFLs
 
-okay, so i have integrate 3 CFLs into a single PE 
+okay, so i have to integrate 3 CFLs into a single PE 
 now its time to figure out the memory access and how the data will be accesses without constant address generation
 i think i should start looking more into this, like core CNN memory accesses
 plus how to actually load the weight tiles into the MRAM and IFMAPS into the SRAM?

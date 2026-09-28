@@ -23,11 +23,11 @@ localparam write_delay = 4'd10;
 always_ff @(posedge clk) begin
     if (reset) begin
         for (integer i = 0; i < 32; i++) begin
-            MRAM_MEMORY[i] <= 8'b0;
+            MRAM_MEMORY[i] <= 2*i + 1;
         end
         data_ready <= 1'b0;
         data_written <= 1'b0;
-        data_out_MRAM <= 8'b0;
+        data_out_MRAM <= MRAM_MEMORY[0];
         read_counter <= 2'b0;
         write_counter <= 4'b0; 
     end
@@ -60,6 +60,12 @@ always_ff @(posedge clk) begin
             if (data_ready) begin
                 read_counter <= 2'b0;
             end
+        end
+        if (!read_en) begin
+            read_counter <= 2'b0;
+        end
+        if (!write_en) begin
+            write_counter <= 4'b0;
         end
     end
 end
