@@ -20,10 +20,14 @@ reg [3 : 0] write_counter;
 localparam read_delay = 2'd3;
 localparam write_delay = 4'd10;
 
+// i can only start the read_counter when read_en is high, after that, whenever the counter finishes, the data_out is ready 
+//irrespective of read_en
+//but this is very sensetive, what if the number of cycles required for read is different? 
+//then this would break
 always_ff @(posedge clk) begin
     if (reset) begin
         for (integer i = 0; i < 32; i++) begin
-            MRAM_MEMORY[i] <= 2*i + 1;
+            MRAM_MEMORY[i] <= 5'h10 + i;
         end
         data_ready <= 1'b0;
         data_written <= 1'b0;
@@ -49,7 +53,7 @@ always_ff @(posedge clk) begin
         end
         else if (read_en) begin
             if (read_counter == read_delay) begin
-                data_out_MRAM <= MRAM_MEMORY[addr];
+                // data_out_MRAM <= MRAM_MEMORY[addr];
                 read_counter <= 2'b0;
                 data_ready <= 1'b1;
             end
@@ -60,6 +64,9 @@ always_ff @(posedge clk) begin
             if (data_ready) begin
                 read_counter <= 2'b0;
             end
+        end
+        if (read_counter == read_delay) begin
+            data_out_MRAM <= MRAM_MEMORY[addr];
         end
         if (!read_en) begin
             read_counter <= 2'b0;

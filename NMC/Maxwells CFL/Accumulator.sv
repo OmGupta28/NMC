@@ -69,12 +69,12 @@ always_ff @(posedge clk) begin
                         MAC_2 <= 32'b0;
                     end
                     if (IMO_COLLECT_COUNTER == 2'b11) begin
-                        state_curr <= SPLIT;
+                        state_curr <= SPLIT; // i can use data_ready to lock state transition from idle to split
                         operate <= 1'b1;
                         IMO_COLLECT_COUNTER <= 2'b00;
                         new_IMO <= 1'b0;
                     end
-                    else begin
+                    else begin // here cunt till counter != 2'b11
                         BO_counter <= 0;
                         IMO_Collector[IMO_COLLECT_COUNTER] <= IMO;
                         IMO_COLLECT_COUNTER <= IMO_COLLECT_COUNTER + 1;

@@ -21,14 +21,17 @@ always_ff @(posedge clk) begin
         partial_RES <= 8'b0;
     end
     else if (operate) begin
-        if (sign) begin
-               partial_RES <= (partial_RES >>> 1) + (IMO ^ 9'hFFF) + 1; 
+        if (sign && BO) begin
+            partial_RES <= ($signed(partial_RES >>> 1)) + (IMO ^ 9'hFFF) + 1; 
+        end
+        else if (sign && !BO) begin
+           partial_RES <= $signed(partial_RES >>> 1); 
         end
         else if(BO == 1) begin
-            partial_RES <= (partial_RES >>> 1) + IMO;
+            partial_RES <= $signed(partial_RES >>> 1) + IMO;
         end
         else if (BO == 0) begin
-            partial_RES <= partial_RES >>> 1;
+            partial_RES <= $signed(partial_RES >>> 1);
         end
     end
 end

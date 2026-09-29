@@ -36,7 +36,7 @@ logic [1 : 0] new_MAC_Counter;
 always_ff @(posedge clk) begin
     if (reset) begin
         new_MAC_Counter <= 2'b0;
-        addr_MRAM <= 5'd1;
+        addr_MRAM <= 5'd0;
         addr_SRAM <= 5'd1;
         new_MAC <= 1'b0;
         // new_IMO <= 1'b0;
@@ -60,9 +60,6 @@ always_ff @(posedge clk) begin
                 addr_MRAM <= addr_MRAM + 1;
             end
         end
-        // else begin
-        //     new_IMO <= 1'b0;
-        // end
     end
 end
 
