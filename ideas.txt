@@ -17,3 +17,14 @@ okay, so i have to integrate 3 CFLs into a single PE
 now its time to figure out the memory access and how the data will be accesses without constant address generation
 i think i should start looking more into this, like core CNN memory accesses
 plus how to actually load the weight tiles into the MRAM and IFMAPS into the SRAM?
+
+okay so i got some numbers too
+I require 4 cycles to collect 3 IMOs from the same SRAM Bank(serially collecting each IMO for the respective compute cores)
+6 cycles to finish their computation
+1 cycle to again start collecting the IMOs and new BO for the next computation
+Therefore, when BO is 5 bits wide, the result collection will take 6 cycles,
+for N bit BO, N + 1 cycles are required
+same logic for IMO collection\
+the re-computation cycle will be constant at 1 cycle
+
+therefore, for this configuration of BO = 5 bits, 3 IMOs fetched from the same SRAM bank costs be 11 cycles in total.

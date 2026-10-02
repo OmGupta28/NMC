@@ -27,6 +27,10 @@ logic sign;
 logic BO_Split;
 logic new_IMO;
 
+logic[3 : 0] imo_collection_cycles;
+logic[3 : 0] computing_cycles;
+logic[3 : 0] restart_cycles;
+
 typedef enum logic [2 : 0] {
     IDLE    = 3'b000,
     SPLIT   = 3'b001,
@@ -56,10 +60,15 @@ always_ff @(posedge clk) begin
         end
         done <= 1'b0;
         new_IMO <= 1'b0;
+        restart_cycles <= 4'b0;
+        imo_collection_cycles <= 4'b0;
+        computing_cycles <= 4'b0;
     end
     else begin
         case (state_curr)
             IDLE: begin
+                restart_cycles <= 4'b0;
+                imo_collection_cycles <= imo_collection_cycles + 1;
                 done <= 1'b0;
                 new_IMO <= 1'b1;
                 // if (new_IMO) begin
@@ -82,6 +91,8 @@ always_ff @(posedge clk) begin
                 // end
             end
             SPLIT: begin
+                imo_collection_cycles <= 4'b0;
+                computing_cycles <= computing_cycles + 1;
                 if (BO_counter >= 5) begin
                     BO_counter <= 0;
                     state_curr <= COLLECT;
@@ -99,6 +110,8 @@ always_ff @(posedge clk) begin
                 end
             end
             COLLECT: begin
+                computing_cycles <= 4'b0;
+                restart_cycles <= restart_cycles + 1;
                 MAC_0 <= MAC_0 + RES_0;
                 MAC_1 <= MAC_1 + RES_1;
                 MAC_2 <= MAC_2 + RES_2;
