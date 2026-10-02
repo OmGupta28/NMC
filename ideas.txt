@@ -28,3 +28,57 @@ same logic for IMO collection\
 the re-computation cycle will be constant at 1 cycle
 
 therefore, for this configuration of BO = 5 bits, 3 IMOs fetched from the same SRAM bank costs be 11 cycles in total.
+
+okay so I have gotten even more updates using NVSim now,
+I have used it to get area, power and latency numbers for 4KB SRAM and MRAM banks
+
+Category       MRAM - 4KB         SRAM - 4KB
+
+Area           7367.1 um^2        11782.8 um^2
+
+Read latency   1.03 ns            330 ps
+
+Write latency  10.2 ns            330 ps
+
+Energy/Read    1.8 pJ             2.28 pJ
+
+Energy/Write   8.683 pJ           0.428 pJ
+
+Leakage Power  2.22 mW            6.05 mW
+
+Therefore, considering 1 SRAM Bank and 1 MRAM Bank, total area would be 19,150 um^2
+For an all SRAM configuration, area = 2 x SRAM Area = 23,572
+
+My design saves about 18.75 % in terms of area compared to an all SRAM configuration (baseline).
+
+and static power consumption of the MRAM Bank is 2.725 times less than the SRAM bank.
+
+Though the weight tile update in the MRAM would consume a lot of power and be very slow, so thats something which i still
+have to look into
+
+
+Category	   MRAM — 8 KB	     SRAM — 8 KB
+Area	       12,594.030 µm²	 22,841.294 µm²
+
+Read latency	1.066 ns	     0.436092 ns
+
+Write latency	10.253 ns	     0.436092 ns
+
+Energy/read	    1.847 pJ	     4.104 pJ
+
+Energy/write	9.009 pJ	     0.604 pJ
+
+Leakage power	4.312 mW	     12.012 mW
+
+total area of hybrid = 35435.3
+area savings against baseline: 22.4%
+and static power saving MRAM vs SRAM: approx 2.8x lesser
+
+so as i would scale, the area savings would increase with it.
+its because MRAMs are more dense 
+
+we could also try a all MRAM config which could work at lower clock frequencies and save a lot of area
+as proved but the output writing and loading new input and weight tiles would add a lot of power and latency 
+
+Note that these do not include the actual compute logic and accumulators. These numbers are only for 
+memory types acquired using NVSim
