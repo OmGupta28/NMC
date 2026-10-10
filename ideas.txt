@@ -82,3 +82,6 @@ as proved but the output writing and loading new input and weight tiles would ad
 
 Note that these do not include the actual compute logic and accumulators. These numbers are only for 
 memory types acquired using NVSim
+
+i could use double buffering concept like neureka
+collect the next IMOs while the computation happens
