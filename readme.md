@@ -80,7 +80,6 @@ Hence the following results are memory-model estimates at selected capacity poin
 | Sense-amplifier mux | 16 |
 | Output mux levels | 1, 1 |
 
-Configuration files and complete reports are available in [insert directory link].
 
 ### Individual Bank Results: 4 KB
 
@@ -162,4 +161,4 @@ refer the readme of NVSim given in the references
 - [Maxwell](https://www.isqed.org/English/Proceedings/pdf/3B-3-112.pdf)
 - [HH-PIM](https://arxiv.org/abs/2504.01468)
 - [NVSim](https://github.com/SEAL-UCSB/NVSim)
-- [[Overflow-free Compute Memories for Edge AI Acceleration](https://www.researchgate.net/publication/373810046_Overflow-free_Compute_Memories_for_Edge_AI_Acceleration)]
+- [Overflow-free Compute Memories for Edge AI Acceleration](https://www.researchgate.net/publication/373810046_Overflow-free_Compute_Memories_for_Edge_AI_Acceleration)
