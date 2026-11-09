@@ -19,6 +19,9 @@ module tb_top;
     end
 
     initial begin
+        $dumpfile("top.vcd");
+        $dumpvars(0, tb_top);
+
         write_en_MRAM = 0;
         write_en_SRAM = 0;
         data_in_MRAM = 0;

@@ -11,24 +11,27 @@ module compute (
 );
 
 reg [8 : 0] partial_RES;
+logic [7 : 0] IMO_reg;
 assign RES = partial_RES[8 : 1];
 
 always_ff @(posedge clk) begin
     if (reset) begin
         partial_RES <= 8'b0;
+        IMO_reg <= 8'b0;
     end
     else if (new_IMO) begin
         partial_RES <= 8'b0;
+        IMO_reg <= IMO;
     end
     else if (operate) begin
         if (sign && BO) begin
-            partial_RES <= ($signed(partial_RES >>> 1)) + (IMO ^ 9'hFFF) + 1; 
+            partial_RES <= ($signed(partial_RES >>> 1)) + (IMO_reg ^ 9'hFFF) + 1; 
         end
         else if (sign && !BO) begin
            partial_RES <= $signed(partial_RES >>> 1); 
         end
         else if(BO == 1) begin
-            partial_RES <= $signed(partial_RES >>> 1) + IMO;
+            partial_RES <= $signed(partial_RES >>> 1) + IMO_reg;
         end
         else if (BO == 0) begin
             partial_RES <= $signed(partial_RES >>> 1);
